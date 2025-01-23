@@ -26,8 +26,9 @@ def create_role(cursor_db) -> None:
 
 def create_educational_material(cursor_db) -> None:
     cursor_db.execute('''
-        CREATE TABLE IF NOT EXISTS Educational_material (
+        CREATE TABLE IF NOT EXISTS EducationalMaterial (
         id INTEGER PRIMARY KEY,
+        title varchar (256) NOT NULL unique,
         summery TEXT,
         material_file BLOB not NULL,
         subject_id INTEGER,
