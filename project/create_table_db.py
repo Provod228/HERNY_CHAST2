@@ -29,7 +29,7 @@ def create_educational_material(cursor_db) -> None:
         CREATE TABLE IF NOT EXISTS EducationalMaterial (
         id INTEGER PRIMARY KEY,
         title varchar (256) NOT NULL unique,
-        summery TEXT,
+        summery TEXT not NULL,
         material_file BLOB not NULL,
         subject_id INTEGER,
         FOREIGN KEY (subject_id) REFERENCES Subject (id)

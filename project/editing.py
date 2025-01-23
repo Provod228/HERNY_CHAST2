@@ -58,7 +58,7 @@ class UserEntity(Entity):
     def delete(cls, cursor_db, condition_list):
         try:
             cursor_db.execute(
-                f"DELETE FROM User where {' and '.join(condition_list)}"
+                f'DELETE FROM User where {' and '.join(condition_list)}'
             )
         except Exception as error:
             print(f"Error: {error}")
