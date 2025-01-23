@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Регистрация</title>
+    <link rel="stylesheet" href="styles.css"> 
+    <link href="/snowFlakes/snow.min.css" rel="stylesheet"> 
+    <link href="https://cdn.jsdelivr.net/gh/Alaev-Co/snowflakes/dist/snow.min.css" rel="stylesheet">
+</head>
+<body>
+    <script src="https://cdn.jsdelivr.net/gh/Alaev-Co/snowflakes/dist/Snow.min.js"></script>
+<script>
+	new Snow ();
+</script>
+    <script src="/snowFlakes/Snow.js"></script>
+    <script>
+	new Snow ();
+    </script>
+    <div class="container">
+        <h1>Регистрация</h1>
+        <form action="#" method="post"> 
+            <input type="text" id="username" name="username" required placeholder="Имя пользователя">
+
+            <input type="email" id="email" name="email" required placeholder="Email">
+
+            <div class="password">
+                <input type="password" id="password-input" placeholder="Пароль" name="password">
+                <a href="#" class="password-control"></a>
+            </div>
+            <script src="https://snipp.ru/cdn/jquery/2.1.1/jquery.min.js"></script>
+            <script>
+            $('body').on('click', '.password-control', function(){
+                if ($('#password-input').attr('type') == 'password'){
+                    $(this).addClass('view');
+                    $('#password-input').attr('type', 'text');
+                } else {
+                    $(this).removeClass('view');
+                    $('#password-input').attr('type', 'password');
+                }
+                return false;
+            });
+            </script>
+            <input type="password" id="confirm_password" name="confirm_password" required placeholder="Подтверждение пароля">
+
+            <button type="submit">Зарегистрироваться</button>
+        </form>
+        <p>Уже есть аккаунт? <a href="login.html">Войти</a></p>
+    </div>
+</body>
+</html>
