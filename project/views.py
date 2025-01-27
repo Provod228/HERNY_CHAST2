@@ -1,24 +1,34 @@
 from fastapi import FastAPI
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import HTMLResponse, FileResponse
+from fastapi import APIRouter, Request
+from fastapi.templating import Jinja2Templates
 
 
 app = FastAPI()
+router = APIRouter(prefix='/project', tags=['Фронтенд'])
+
+router.mount("/static", StaticFiles(directory="templates/static"), name="static")
+templates = Jinja2Templates(directory='templates')
+data = {'message': "message test", 'title': "title test"}
 
 
-app.mount("/static", StaticFiles(directory="WEB/static"), name="static")
+@router.get('/students', response_class=HTMLResponse)
+async def get_students_html(request: Request):
+    return templates.TemplateResponse(name='entrance_jornal.html', context={'request': request, 'data': data})
 
 
-@app.get("/login")
-def root():
-    return FileResponse("WEB/login.html")
+@router.get("/login")
+async def login():
+    return FileResponse("templates/login.html")
 
 
-@app.get("/")
-def root():
-    return FileResponse("WEB/login.html")
+@router.get("/")
+async def root():
+    return FileResponse("templates/login.html")
 
 
-@app.get("/regestartion")
-def root():
-    return FileResponse("WEB/regestartion_jornal.html")
+@router.get("/registration")
+async def registration():
+    return FileResponse("templates/registration.html")
+
