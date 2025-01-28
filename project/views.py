@@ -3,6 +3,8 @@ from fastapi.staticfiles import StaticFiles
 from fastapi.responses import HTMLResponse, FileResponse
 from fastapi import APIRouter, Request
 from fastapi.templating import Jinja2Templates
+from interlayer_db import *
+import sqlite3
 
 
 app = FastAPI()
@@ -10,12 +12,24 @@ router = APIRouter(prefix='/project', tags=['Фронтенд'])
 
 router.mount("/static", StaticFiles(directory="templates/static"), name="static")
 templates = Jinja2Templates(directory='templates')
-data = {'message': "message test", 'title': "title test"}
+
+# data_test = Role.get(cursor_db=cursor) # видит
 
 
 @router.get('/students', response_class=HTMLResponse)
 async def get_students_html(request: Request):
-    return templates.TemplateResponse(name='entrance_jornal.html', context={'request': request, 'data': data})
+    connection = sqlite3.connect('school.db')
+    cursor = connection.cursor()
+    data_test = Role.get(cursor_db=cursor)
+    connection.commit()
+    connection.close()
+    return templates.TemplateResponse(
+        name='entrance_jornal.html',
+        context={
+            'request': request,
+            'data_test': data_test,
+        }
+    )
 
 
 @router.get("/login")

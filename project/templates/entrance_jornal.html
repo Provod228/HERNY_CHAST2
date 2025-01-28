@@ -7,6 +7,10 @@
 </head>
 <body>
 <p>---------------------- ------------</p>
-<p> {{ data.message }}, {{ data.title }}</p>
+<ul>
+{% for item_k in data_test %}
+    <li> {{ item_k.id }}, {{ item_k.title }} </li>
+{% endfor %}
+</ul>
 </body>
 </html>
