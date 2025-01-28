@@ -11,6 +11,10 @@ def hash_password(password: str) -> str:
 
 class Entity(metaclass=ABCMeta):
     @abstractmethod
+    def get(self, cursor_db):
+        pass
+
+    @abstractmethod
     def add(self, cursor_db):
         pass
 
@@ -38,6 +42,24 @@ class UserEntity(Entity):
         cls.instance.password = hash_password(password)
         cls.instance.role_id = role_id
         return cls.instance
+
+    @classmethod
+    def get(cls, cursor_db, condition_list=None):
+        try:
+            if condition_list is None:
+                cursor_db.execute(
+                    "Select *"
+                    "from User"
+                )
+                return cursor_db.fetchall()
+            else:
+                cursor_db.execute(
+                    f"Select *"
+                    f"from User Where {' and '.join(condition_list)}"
+                )
+                return cursor_db.fetchall()
+        except Exception as error:
+            print(f"Error: {error}")
 
     @classmethod
     def add(cls, cursor_db):
@@ -103,6 +125,24 @@ class EducationalMaterialEntity(Entity):
         return cls.instance
 
     @classmethod
+    def get(cls, cursor_db, condition_list=None):
+        try:
+            if condition_list is None:
+                cursor_db.execute(
+                    "Select *"
+                    "from EducationalMaterial"
+                )
+                return cursor_db.fetchall()
+            else:
+                cursor_db.execute(
+                    f"Select *"
+                    f"from EducationalMaterial Where {' and '.join(condition_list)}"
+                )
+                return cursor_db.fetchall()
+        except Exception as error:
+            print(f"Error: {error}")
+
+    @classmethod
     def add(cls, cursor_db):
         try:
             cursor_db.execute(
@@ -154,6 +194,25 @@ class RoleEntity(Entity):
         cls.instance = super().__new__(cls)
         cls.instance.title = title
         return cls.instance
+
+    @classmethod
+    def get(cls, cursor_db, condition_list=None):
+        try:
+            if condition_list is None:
+                cursor_db.execute(
+                    "Select *"
+                    "from Role"
+                )
+                return cursor_db.fetchall()
+            else:
+                cursor_db.execute(
+                    f"Select *"
+                    f"from Role "
+                    f"Where {' and '.join(condition_list)}"
+                )
+                return cursor_db.fetchall()
+        except Exception as error:
+            print(f"Error: {error}")
 
     @classmethod
     def add(cls, cursor_db):
@@ -208,6 +267,24 @@ class SubjectEntity(Entity):
         return cls.instance
 
     @classmethod
+    def get(cls, cursor_db, condition_list=None):
+        try:
+            if condition_list is None:
+                cursor_db.execute(
+                    "Select *"
+                    "from Subject"
+                )
+                return cursor_db.fetchall()
+            else:
+                cursor_db.execute(
+                    f"Select *"
+                    f"from Subject Where {' and '.join(condition_list)}"
+                )
+                return cursor_db.fetchall()
+        except Exception as error:
+            print(f"Error: {error}")
+
+    @classmethod
     def add(cls, cursor_db):
         try:
             cursor_db.execute(
@@ -256,7 +333,6 @@ if __name__ == "__main__":
     if os.path.exists(data_base_file):
         connection = sqlite3.connect(data_base_file)
         cursor = connection.cursor()
-        RoleEntity(title="User").add(cursor)
         # User.delete_all(cursor)
         # Role(name_role="Пользователь").add(cursor)
         # Role(name_role="Менеджер").add(cursor)
@@ -277,7 +353,10 @@ if __name__ == "__main__":
         # ).add(cursor)
         # User.delete('name_user="Ignat"')
         # User.change(cursor, ['login_user="aaa"'], ['status_user="4"'])
-
+        # print(UserEntity.get(cursor_db=cursor))
+        # print(RoleEntity.get(cursor_db=cursor, condition_list=["title='User'"]))
+        # print(EducationalMaterialEntity.get(cursor_db=cursor))
+        # print(SubjectEntity.get(cursor_db=cursor))
         connection.commit()
 
         connection.close()
