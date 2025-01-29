@@ -1,6 +1,5 @@
 import hashlib
 import sqlite3
-import datetime
 import os
 from abc import ABCMeta, abstractmethod
 
@@ -329,7 +328,7 @@ class SubjectEntity(Entity):
 
 
 if __name__ == "__main__":
-    data_base_file = 'school.db'
+    data_base_file = '../school.db'
     if os.path.exists(data_base_file):
         connection = sqlite3.connect(data_base_file)
         cursor = connection.cursor()

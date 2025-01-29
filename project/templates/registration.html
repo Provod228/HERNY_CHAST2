@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Регистрация</title>
     <link rel="stylesheet" href="/static/styles.css">
-    <link href="/snowFlakes/snow.min.css" rel="stylesheet"> 
+    <link href="/snowFlakes/snow.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/gh/Alaev-Co/snowflakes/dist/snow.min.css" rel="stylesheet">
 </head>
 <body>
@@ -19,33 +19,46 @@
     </script>
     <div class="container">
         <h1>Регистрация</h1>
-        <form action="#" method="post"> 
+        <form id="registrationForm" action="/project/registration" method="post">
             <input type="text" id="username" name="username" required placeholder="Имя пользователя">
-
+            <input type="text" id="login" name="login" required placeholder="Логин пользователя">
             <input type="email" id="email" name="email" required placeholder="Email">
-
-            <div class="password">
-                <input type="password" id="password-input" placeholder="Пароль" name="password">
-                <a href="#" class="password-control"></a>
-            </div>
-            <script src="https://snipp.ru/cdn/jquery/2.1.1/jquery.min.js"></script>
-            <script>
-            $('body').on('click', '.password-control', function(){
-                if ($('#password-input').attr('type') == 'password'){
-                    $(this).addClass('view');
-                    $('#password-input').attr('type', 'text');
-                } else {
-                    $(this).removeClass('view');
-                    $('#password-input').attr('type', 'password');
-                }
-                return false;
-            });
-            </script>
+            <input type="password" id="password_input" name="password_input" required placeholder="Пароль">
             <input type="password" id="confirm_password" name="confirm_password" required placeholder="Подтверждение пароля">
-
             <button type="submit">Зарегистрироваться</button>
         </form>
         <p>Уже есть аккаунт? <a href="/project/login">Войти</a></p>
     </div>
+    <script>
+        const form = document.getElementById('registrationForm');
+        const passwordInput = document.getElementById('password_input');
+        const confirmPasswordInput = document.getElementById('confirm_password');
+        form.addEventListener('submit', function(event) {
+            event.preventDefault();
+            if (passwordInput.value !== confirmPasswordInput.value) {
+                alert("Пароли не совпадают!");
+                confirmPasswordInput.focus();
+                return;
+            }
+            const formData = new FormData(this);
+            const data = {};
+             formData.forEach((value, key) => {
+                 data[key] = value;
+             });
+                fetch('/project/registration', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(data),
+                })
+                .then(response => response.json())
+                .then(data => {
+                    console.log(data)
+                    window.location.href = '/project/login';
+                })
+                .catch(error => console.error('Error:', error));
+        });
+    </script>
 </body>
 </html>

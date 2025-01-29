@@ -47,7 +47,7 @@ def create_subject(cursor_db) -> None:
 
 
 if __name__ == "__main__":
-    connection = sqlite3.connect('school.db')
+    connection = sqlite3.connect('../school.db')
 
     cursor = connection.cursor()
 

@@ -1,4 +1,4 @@
-from editing import UserEntity, SubjectEntity, EducationalMaterialEntity, RoleEntity
+from .editing_db import UserEntity, EducationalMaterialEntity, SubjectEntity, RoleEntity
 from abc import ABCMeta, abstractmethod
 import sqlite3
 
@@ -7,7 +7,6 @@ class AbstractManipulation(metaclass=ABCMeta):
     @abstractmethod
     def get(self, cursor_db):
         pass
-
 
     @abstractmethod
     def add(self, cursor_db):
@@ -30,8 +29,8 @@ class User(AbstractManipulation):
     @staticmethod
     def get(
             cursor_db, id=None, username=None, login=None, email=None, password=None, role_id=1, *args, **kwargs
-    ) -> dict:
-        role_data = {}
+    ) -> list:
+        role_data = []
         search_list = []
         search_dict = {
             'id': id,
@@ -47,30 +46,29 @@ class User(AbstractManipulation):
                     search_list.append(f'{k} = "{v}"')
             index = 0
             for item in UserEntity.get(cursor_db, search_list):
-                role_data[index] = {
+                role_data.append({
                     'id': item[0],
                     'username': item[1],
                     'login': item[2],
                     'email': item[3],
                     'password': item[4],
                     'role_id': item[5],
-                }
+                })
                 index += 1
             return role_data
         else:
             index = 0
             for item in UserEntity.get(cursor_db):
-                role_data[index] = {
+                role_data.append({
                     'id': item[0],
                     'username': item[1],
                     'login': item[2],
                     'email': item[3],
                     'password': item[4],
                     'role_id': item[5],
-                }
+                })
                 index += 1
             return role_data
-
 
     @staticmethod
     def add(cursor_db, username=None, login=None, email=None, password=None, role_id=1, *args, **kwargs) -> None:
@@ -123,8 +121,8 @@ class User(AbstractManipulation):
 
 class Role(AbstractManipulation):
     @staticmethod
-    def get(cursor_db, id=None, title=None, *args, **kwargs) -> dict:
-        role_data = {}
+    def get(cursor_db, id=None, title=None, *args, **kwargs) -> list:
+        role_data = []
         search_list = []
         search_dict = {
             'id': id,
@@ -136,13 +134,13 @@ class Role(AbstractManipulation):
                     search_list.append(f'{k} = "{v}"')
             index = 0
             for item in RoleEntity.get(cursor_db, search_list):
-                role_data[index] = {'id': item[0], 'title': item[1]}
+                role_data.append({'id': item[0], 'title': item[1]})
                 index += 1
             return role_data
         else:
             index = 0
             for item in RoleEntity.get(cursor_db):
-                role_data[index] = {'id': item[0], 'title': item[1]}
+                role_data.append({'id': item[0], 'title': item[1]})
                 index += 1
             return role_data
 
@@ -191,8 +189,8 @@ class Role(AbstractManipulation):
 
 class Subject(AbstractManipulation):
     @staticmethod
-    def get(cursor_db, id=None, title=None, *args, **kwargs) -> dict:
-        role_data = {}
+    def get(cursor_db, id=None, title=None, *args, **kwargs) -> list:
+        role_data = []
         search_list = []
         search_dict = {
             'id': id,
@@ -204,16 +202,15 @@ class Subject(AbstractManipulation):
                     search_list.append(f'{k} = "{v}"')
             index = 0
             for item in SubjectEntity.get(cursor_db, search_list):
-                role_data[index] = {'id': item[0], 'title': item[1]}
+                role_data.append({'id': item[0], 'title': item[1]})
                 index += 1
             return role_data
         else:
             index = 0
             for item in SubjectEntity.get(cursor_db):
-                role_data[index] = {'id': item[0], 'title': item[1]}
+                role_data.append({'id': item[0], 'title': item[1]})
                 index += 1
             return role_data
-
 
     @staticmethod
     def add(cursor_db, title=None, *args, **kwargs) -> None:
@@ -262,8 +259,8 @@ class EducationalMaterial(AbstractManipulation):
     @staticmethod
     def get(
             cursor_db, id=None, title=None, summery=None, material_file=None, subject_id=None, *args, **kwargs
-    ) -> dict:
-        role_data = {}
+    ) -> list:
+        role_data = []
         search_list = []
         search_dict = {
             'id': id,
@@ -278,28 +275,27 @@ class EducationalMaterial(AbstractManipulation):
                     search_list.append(f'{k} = "{v}"')
             index = 0
             for item in EducationalMaterialEntity.get(cursor_db, search_list):
-                role_data[index] = {
+                role_data.append({
                     'id': item[0],
                     'title': item[1],
                     'summery': item[2],
                     'material_file': item[3],
                     'subject_id': item[4],
-                }
+                })
                 index += 1
             return role_data
         else:
             index = 0
             for item in EducationalMaterialEntity.get(cursor_db):
-                role_data[index] = {
+                role_data.append({
                     'id': item[0],
                     'title': item[1],
                     'summery': item[2],
                     'material_file': item[3],
                     'subject_id': item[4],
-                }
+                })
                 index += 1
             return role_data
-
 
     @staticmethod
     def add(cursor_db, title=None, summery=None, material_file=None, subject_id=None, *args, **kwargs) -> None:
@@ -350,7 +346,7 @@ class EducationalMaterial(AbstractManipulation):
 
 
 if __name__ == "__main__":
-    connection = sqlite3.connect('school.db')
+    connection = sqlite3.connect('../school.db')
     cursor = connection.cursor()
 #
     # User.add(cursor_db=cursor, username="LOL", login="aba", email="lol@bk.ru", password="3123fas")
