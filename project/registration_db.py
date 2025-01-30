@@ -7,3 +7,8 @@ class UserRegistration(BaseModel):
     email: str
     password_input: str
     confirm_password: str
+
+
+class UserEntrance(BaseModel):
+    email: str
+    password: str

@@ -345,32 +345,32 @@ class EducationalMaterial(AbstractManipulation):
         EducationalMaterialEntity.delete_all(cursor_db)
 
 
-if __name__ == "__main__":
-    connection = sqlite3.connect('../school.db')
-    cursor = connection.cursor()
+# if __name__ == "__main__":
+#     connection = sqlite3.connect('../school.db')
+#     cursor = connection.cursor()
+# #
+#     # User.add(cursor_db=cursor, username="LOL", login="aba", email="lol@bk.ru", password="3123fas")
+# #     User.delete(cursor_db=cursor, is_login='aba', is_email='lol@bk.ru')
+# #     User.change(cursor_db=cursor, is_email="lol@bk.ru", email="ffff@ff.ff")
+# #     User.delete_all(cursor)
+# #     Role.add(cursor_db=cursor, title="LOL")
+# #     Role.change(cursor_db=cursor, is_title="LOL", title="lol")
+# #     Role.delete(cursor_db=cursor, is_title="lol")
+# #     EducationalMaterial.add(
+# #         cursor_db=cursor, title="SOLID", summery="Что такое солид", material_file="README.md", subject_id=1
+# #     )
+# #     EducationalMaterial.change(
+# #         cursor_db=cursor, is_title="SOLID", title="NAAA", summery=None, material_file=None, subject_id=None,
+# #     )
+# #     EducationalMaterial.delete(cursor_db=cursor, is_title="SOLID")
+#     print(Role.get(cursor_db=cursor, title='Admin'))
+#     print(Role.get(cursor_db=cursor))
+#     print(Subject.get(cursor_db=cursor, title='SOLID'))
+#     print(Subject.get(cursor_db=cursor))
+#     print(User.get(cursor_db=cursor))
+#     print(User.get(cursor_db=cursor, username='LOL'))
+#     print(EducationalMaterial.get(cursor_db=cursor))
+#     print(EducationalMaterial.get(cursor_db=cursor, title='NAAA'))
+#     connection.commit()
 #
-    # User.add(cursor_db=cursor, username="LOL", login="aba", email="lol@bk.ru", password="3123fas")
-#     User.delete(cursor_db=cursor, is_login='aba', is_email='lol@bk.ru')
-#     User.change(cursor_db=cursor, is_email="lol@bk.ru", email="ffff@ff.ff")
-#     User.delete_all(cursor)
-#     Role.add(cursor_db=cursor, title="LOL")
-#     Role.change(cursor_db=cursor, is_title="LOL", title="lol")
-#     Role.delete(cursor_db=cursor, is_title="lol")
-#     EducationalMaterial.add(
-#         cursor_db=cursor, title="SOLID", summery="Что такое солид", material_file="README.md", subject_id=1
-#     )
-#     EducationalMaterial.change(
-#         cursor_db=cursor, is_title="SOLID", title="NAAA", summery=None, material_file=None, subject_id=None,
-#     )
-#     EducationalMaterial.delete(cursor_db=cursor, is_title="SOLID")
-    print(Role.get(cursor_db=cursor, title='Admin'))
-    print(Role.get(cursor_db=cursor))
-    print(Subject.get(cursor_db=cursor, title='SOLID'))
-    print(Subject.get(cursor_db=cursor))
-    print(User.get(cursor_db=cursor))
-    print(User.get(cursor_db=cursor, username='LOL'))
-    print(EducationalMaterial.get(cursor_db=cursor))
-    print(EducationalMaterial.get(cursor_db=cursor, title='NAAA'))
-    connection.commit()
-
-    connection.close()
+#     connection.close()
