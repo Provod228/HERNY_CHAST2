@@ -45,19 +45,24 @@
              formData.forEach((value, key) => {
                  data[key] = value;
              });
-                fetch('/project/registration', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify(data),
-                })
-                .then(response => response.json())
-                .then(data => {
-                    console.log(data)
+            fetch('/project/registration', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(data),
+            })
+            .then(response => response.json())
+            .then(data => {
+                 if (data.message) {
+                    alert("Пользователь создан")
                     window.location.href = '/project/login';
-                })
-                .catch(error => console.error('Error:', error));
+                 }
+                 else {
+                    alert("Пользователь с почтой или логином уже существует")
+                }
+            })
+            .catch(error => console.error('Error:', error));
         });
     </script>
 </body>

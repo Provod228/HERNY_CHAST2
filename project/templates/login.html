@@ -10,50 +10,73 @@
 </head>
 <body>
     <script src="https://cdn.jsdelivr.net/gh/Alaev-Co/snowflakes/dist/Snow.min.js"></script>
-<script>
-	new Snow ();
-</script>
+    <script>new Snow();</script>
     <script src="/snowFlakes/Snow.js"></script>
     <script>
-	new Snow ({
-        showSnowBalls: true,
-			showSnowBallsIsMobile: false,
-			showSnowflakes: true,
-			countSnowflake: 300,
-			snowBallsLength: 10,
-			snowBallIterations: 40,
-			snowBallupNum: 1,
-			snowBallIterationsInterval: 1000,
-			clearSnowBalls: 200,
-    });
+        new Snow({
+            showSnowBalls: true,
+            showSnowBallsIsMobile: false,
+            showSnowflakes: true,
+            countSnowflake: 300,
+            snowBallsLength: 10,
+            snowBallIterations: 40,
+            snowBallupNum: 1,
+            snowBallIterationsInterval: 1000,
+            clearSnowBalls: 200,
+        });
     </script>
     <div class="container">
-    <h1>Вход</h1>    
-    <form action="#" method="post">
-    <input type="text" id="username" name="username" required placeholder="Введите email">
-
-    <div class="password">
-        <input type="password" id="password-input" placeholder="Пароль" name="password">
-        <a href="#" class="password-control"></a>
+        <h1>Вход</h1>
+        <form id="loginForm" action="/project/login" method="post">
+            <input type="email" id="email" name="email" required placeholder="Введите email">
+            <div class="password">
+                <input type="password" id="password-input" name="password" placeholder="Пароль">
+                <a href="#" class="password-control"></a>
+            </div>
+            <button type="submit">Вход</button>
+        </form>
+        <a href="/project/registration" class="button">Регистрация</a>
     </div>
     <script src="https://snipp.ru/cdn/jquery/2.1.1/jquery.min.js"></script>
     <script>
-    $('body').on('click', '.password-control', function(){
-        if ($('#password-input').attr('type') == 'password'){
-            $(this).addClass('view');
-            $('#password-input').attr('type', 'text');
-        } else {
-            $(this).removeClass('view');
-            $('#password-input').attr('type', 'password');
-        }
-        return false;
+        $('body').on('click', '.password-control', function() {
+            if ($('#password-input').attr('type') == 'password') {
+                $(this).addClass('view');
+                $('#password-input').attr('type', 'text');
+            } else {
+                $(this).removeClass('view');
+                $('#password-input').attr('type', 'password');
+            }
+            return false;
+        });
+        const form = document.getElementById('loginForm');
+    form.addEventListener('submit', function (event) {
+        event.preventDefault();
+          const formData = new FormData(this);
+        const data = {};
+        formData.forEach((value, key) => {
+            data[key] = value;
+        });
+        fetch('/project/login', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.message) {
+                window.location.href = '/project/students';
+            } else {
+                alert('Неверная почта или пароль');
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('Произошла ошибка');
+        });
     });
     </script>
-    <form action="/" method="post">
-        <button type="submit">Вход</button>
-    </form>
-    <a href="/project/registration" class="button">Регистрация</a>
-    </form>
-    </div>
 </body>
 </html>
