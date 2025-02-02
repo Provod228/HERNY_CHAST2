@@ -1,0 +1,9 @@
+{% extends "entrance_jornal.html" %}
+{% block content %}
+<ul>
+    {% for item_k in data_test %}
+        <li> {{ item_k.id }}, {{ item_k.title }} </li>
+    {% endfor %}
+</ul>
+
+{% endblock %}

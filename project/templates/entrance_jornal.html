@@ -1,15 +1,81 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="ru">
 <head>
-<meta charset="UTF-8">
-    <link href="/static/styles.css" rel="stylesheet">
-    <title>Все студенты</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Шаблон</title>
+    <link rel="stylesheet" href="/static/styles.css">
+     <link href="/snowFlakes/snow.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/gh/Alaev-Co/snowflakes/dist/snow.min.css" rel="stylesheet">
+    <style>
+         body {
+            margin: 0;
+            font-family: sans-serif;
+            display: flex;
+             background-color: #f4f4f4;
+        }
+
+        .sidebar {
+            width: 200px;
+            background-color: #333;
+            color: white;
+            padding: 20px;
+            height: 100vh; /* высота на весь экран */
+            position: fixed; /*фиксированная навигация*/
+            top: 0;
+            left: 0;
+        }
+
+        .sidebar ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .sidebar ul li {
+            margin-bottom: 10px;
+        }
+
+        .sidebar a {
+            color: white;
+            text-decoration: none;
+            display: block;
+            padding: 10px;
+        }
+
+        .sidebar a:hover {
+           background-color: #555;
+        }
+
+        .content {
+            flex: 1;
+            padding: 20px;
+            margin-left: 200px; /* чтобы не закрывать sidebar */
+            background-color: white; /* цвет фона контента */
+
+        }
+    </style>
 </head>
 <body>
-<ul>
-{% for item_k in data_test %}
-    <li> {{ item_k.id }}, {{ item_k.title }} </li>
-{% endfor %}
-</ul>
+    <div class="sidebar">
+        <ul>
+              {% if user %}
+                <li>Привет, {{ user[1] }}!</li>
+                   <li>
+                        <a href="/jornal/logout">Выйти</a>
+                   </li>
+                {% else %}
+                 <li><a href="/jornal/login">Войти</a></li>
+                {% endif %}
+             <li><a href="/jornal/main_page">Главная</a></li>
+            <li><a href="/jornal/another_page">Другая страница</a></li>
+            <li><a href="/jornal/third_page">Третья страница</a></li>
+            <!-- Добавьте другие страницы -->
+        </ul>
+    </div>
+    <div class="content">
+       {% block content %}
+        {% endblock %}
+    </div>
+
 </body>
 </html>

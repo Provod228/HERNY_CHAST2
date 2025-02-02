@@ -11,13 +11,13 @@ from file_db.editing_db import hash_password
 data_base = 'school.db'
 
 app = FastAPI()
-router = APIRouter(prefix='/project', tags=['Фронтенд'])
+router = APIRouter(prefix='/jornal', tags=['Фронтенд'])
 
 router.mount("/static", StaticFiles(directory="templates/static"), name="static")
 templates = Jinja2Templates(directory='templates')
 
 
-@router.get('/students', response_class=HTMLResponse)
+@router.get('/main_page', response_class=HTMLResponse)
 async def get_students_html(request: Request):
     connection = sqlite3.connect(data_base)
     cursor = connection.cursor()
@@ -25,7 +25,7 @@ async def get_students_html(request: Request):
     connection.commit()
     connection.close()
     return templates.TemplateResponse(
-        name='entrance_jornal.html',
+        name='main_page.html',
         context={
             'request': request,
             'data_test': data_test,
@@ -50,11 +50,9 @@ async def post_login(user: UserEntrance):
     if User.get(cursor_db=cursor, email=user.email, password=hash_password(user.password)) != []:
         connection.commit()
         connection.close()
-        print('f')
         return {"message": True}
     else:
         connection.close()
-        print('fff')
         return {"message": False}
 
 

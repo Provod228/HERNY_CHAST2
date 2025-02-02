@@ -27,7 +27,7 @@
     </script>
     <div class="container">
         <h1>Вход</h1>
-        <form id="loginForm" action="/project/login" method="post">
+        <form id="loginForm" action="/jornal/login" method="post">
             <input type="email" id="email" name="email" required placeholder="Введите email">
             <div class="password">
                 <input type="password" id="password-input" name="password" placeholder="Пароль">
@@ -35,7 +35,7 @@
             </div>
             <button type="submit">Вход</button>
         </form>
-        <a href="/project/registration" class="button">Регистрация</a>
+        <a href="/jornal/registration" class="button">Регистрация</a>
     </div>
     <script src="https://snipp.ru/cdn/jquery/2.1.1/jquery.min.js"></script>
     <script>
@@ -57,7 +57,7 @@
         formData.forEach((value, key) => {
             data[key] = value;
         });
-        fetch('/project/login', {
+        fetch('/jornal/login', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -67,7 +67,7 @@
         .then(response => response.json())
         .then(data => {
             if (data.message) {
-                window.location.href = '/project/students';
+                window.location.href = '/jornal/main_page';
             } else {
                 alert('Неверная почта или пароль');
             }

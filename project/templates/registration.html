@@ -27,7 +27,7 @@
             <input type="password" id="confirm_password" name="confirm_password" required placeholder="Подтверждение пароля">
             <button type="submit">Зарегистрироваться</button>
         </form>
-        <p>Уже есть аккаунт? <a href="/project/login">Войти</a></p>
+        <p>Уже есть аккаунт? <a href="/jornal/login">Войти</a></p>
     </div>
     <script>
         const form = document.getElementById('registrationForm');
@@ -45,7 +45,7 @@
              formData.forEach((value, key) => {
                  data[key] = value;
              });
-            fetch('/project/registration', {
+            fetch('/jornal/registration', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -56,7 +56,7 @@
             .then(data => {
                  if (data.message) {
                     alert("Пользователь создан")
-                    window.location.href = '/project/login';
+                    window.location.href = '/jornal/login';
                  }
                  else {
                     alert("Пользователь с почтой или логином уже существует")
